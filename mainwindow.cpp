@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <math.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,11 +15,27 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->customPlot->graph(1)->setPen(QPen(Qt::red)); // line color red for second graph
     // generate some points of data (y0 for first, y1 for second graph):
     QVector<double> x(251), y0(251), y1(251);
+    QVector<double> x1(252);
+    QVector<double> x2(252);
     for (int i=0; i<251; ++i)
     {
       x[i] = i;
-      y0[i] = qExp(-i/150.0)*qCos(i/10.0); // exponentially decaying cosine
-      y1[i] = qExp(-i/150.0);              // exponential envelope
+      //y0[i] = qExp(-i/150.0)*qCos(i/10.0); // exponentially decaying cosine
+
+      y1[i]=abs(2-i % 4)-1;                   //TRIANGLE
+
+      /*
+      if(qSin(i*(4*3.14159/251))>0)
+          y1[i]=1;                            //SQUARE
+      else y1[i]=-1;
+      */
+
+      //y1[i] = qSin(i*(4*3.14159/251));      //SINUS
+
+      y0[i] = x1[i];
+
+      x1[i + 1] = x1[i] + x2[i];
+      x2[i + 1] = x2[i] - x2[i] - tanh(x1[i]) + pow(y1[i], 3);
     }
     // configure right and top axis to show ticks but no labels:
     // (see QCPAxisRect::setupFullAxesBox for a quicker method to do this)
