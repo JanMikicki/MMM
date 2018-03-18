@@ -17,10 +17,12 @@ MainWindow::MainWindow(QWidget *parent) :
     QVector<double> x(251), y0(251), y1(251);
     QVector<double> x1(252);
     QVector<double> x2(252);
+      
     for (int i=0; i<251; ++i)
     {
       x[i] = i;
       //y0[i] = qExp(-i/150.0)*qCos(i/10.0); // exponentially decaying cosine
+
 
       y1[i]=abs(2-i % 4)-1;                   //TRIANGLE
 
@@ -37,6 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
       x1[i + 1] = x1[i] + x2[i];
       x2[i + 1] = x2[i] - x2[i] - tanh(x1[i]) + pow(y1[i], 3);
     }
+      
     // configure right and top axis to show ticks but no labels:
     // (see QCPAxisRect::setupFullAxesBox for a quicker method to do this)
     ui->customPlot->xAxis2->setVisible(true);
