@@ -24,13 +24,13 @@ MainWindow::MainWindow(QWidget *parent) :
       //y0[i] = qExp(-i/150.0)*qCos(i/10.0); // exponentially decaying cosine
 
 
-      y1[i]=abs(2-i % 4)-1;                   //TRIANGLE
+      //y1[i]=2/3.14159*asin(qSin(i*(4*3.14159/251)));                   //TRIANGLE
 
-      /*
-      if(qSin(i*(4*3.14159/251))>0)
+/*
+      if(qSin(i*(4*3.14159/251))>=0)
           y1[i]=1;                            //SQUARE
       else y1[i]=-1;
-      */
+*/
 
       //y1[i] = qSin(i*(4*3.14159/251));      //SINUS
 
