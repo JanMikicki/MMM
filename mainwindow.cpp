@@ -17,15 +17,19 @@ MainWindow::MainWindow(QWidget *parent) :
     QVector<double> x, y0, y1;
     QVector<double> x1;
     QVector<double> x2;
+    QVector<double> trapez1;
+    QVector<double> trapez2;
     x1.append(0);
     x2.append(0);
+    trapez1.append(0);
+    trapez2.append(0);
+    y1.append(0);
     for (int i=0; i<551; ++i)
     {
       x.append(0.025 * i);
-      //y0[i] = qExp(-i/150.0)*qCos(i/10.0); // exponentially decaying cosine
 
 
-      y1.append(2/3.14159*asin(qSin(i*(4*3.14159/251))));                   //TRIANGLE
+      //y1.append(2/3.14159*asin(qSin(i*(4*3.14159/251))));                   //TRIANGLE
 
 /*
       if(qSin(i*(4*3.14159/251))>=0)
@@ -33,14 +37,17 @@ MainWindow::MainWindow(QWidget *parent) :
       else y1[i]=-1;
 */
 
-      //y1.append(qSin(i*(4*3.14159/251)));      //SINUS
+      y1.append(qSin(i*(4*3.14159/251)));      //SINUS
 
       //i > 100 ? y1.append(2) : y1.append(0);  //STEP
 
-      y0.append(x1[i]);
+      y0.append(trapez1[i]);
 
       x1.append(x1[i] + 0.025 * x2[i]);
       x2.append(x2[i] + 0.025 * (- x2[i] - tanh(x1[i]) + pow(y1[i], 3)));
+
+      trapez1.append(trapez1[i] + 0.025*(x2[i]+x2[i+1])*0.5);
+      trapez2.append(trapez2[i] + 0.025*((- x2[i] - tanh(x1[i]) + pow(y1[i], 3)) + (- x2[i+1] - tanh(x1[i+1]) + pow(y1[i+1], 3)))*0.5);
     }
       
     // configure right and top axis to show ticks but no labels:
