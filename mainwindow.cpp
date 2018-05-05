@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 #include <math.h>
 
+double b=1,A=1,a=1;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -14,32 +16,44 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->customPlot->addGraph();
     ui->customPlot->graph(1)->setPen(QPen(Qt::red)); // line color red for second graph
     // generate some points of data (y0 for first, y1 for second graph):
-    QVector<double> x(251), y0(251), y1(251);
-    QVector<double> x1(252);
-    QVector<double> x2(252);
-      
-    for (int i=0; i<251; ++i)
+    QVector<double> x, y0, y1;
+    QVector<double> x1;
+    QVector<double> x2;
+    QVector<double> trapez1;
+    QVector<double> trapez2;
+    x1.append(0);
+    x2.append(0);
+    trapez1.append(0);
+    trapez2.append(0);
+    y1.append(0);
+
+
+    for (int i=0; i<551; ++i)
     {
-      x[i] = i;
-      //y0[i] = qExp(-i/150.0)*qCos(i/10.0); // exponentially decaying cosine
+      x.append(0.025 * i);
 
 
-      //y1[i]=2/3.14159*asin(qSin(i*(4*3.14159/251)));                   //TRIANGLE
+      //y1.append(2/3.14159*asin(qSin(i*(4*3.14159/251))));                   //TRIANGLE
 
 /*
       if(qSin(i*(4*3.14159/251))>=0)
           y1[i]=1;                            //SQUARE
       else y1[i]=-1;
+
 */
+      y1.append(qSin(i*(4*3.14159/251)));      //SINUS
 
-      //y1[i] = qSin(i*(4*3.14159/251));      //SINUS
+      //i > 100 ? y1.append(2) : y1.append(0);  //STEP
 
-      y0[i] = x1[i];
+      y0.append(trapez1[i]);
 
-      x1[i + 1] = x1[i] + x2[i];
-      x2[i + 1] = x2[i] - x2[i] - tanh(x1[i]) + pow(y1[i], 3);
+      x1.append(x1[i] + 0.025 * x2[i]);
+      x2.append(x2[i] + 0.025 * (- b*x2[i] - A*tanh(a*x1[i]) + pow(y1[i], 3)));
+
+      trapez1.append(trapez1[i] + 0.025*(x2[i]+x2[i+1])*0.5);
+      trapez2.append(trapez2[i] + 0.025*((- b*x2[i] - A*tanh(a*x1[i]) + pow(y1[i], 3)) + (- b*x2[i+1] - A*tanh(a*x1[i+1]) + pow(y1[i+1], 3)))*0.5);
     }
-      
+
     // configure right and top axis to show ticks but no labels:
     // (see QCPAxisRect::setupFullAxesBox for a quicker method to do this)
     ui->customPlot->xAxis2->setVisible(true);
@@ -61,7 +75,42 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->customPlot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
 }
 
+void MainWindow::on_spinBox_valueChanged(int arg1)
+{
+    b=arg1;
+}
+
+void MainWindow::on_spinBox_2_valueChanged(int arg1)
+{
+    A=arg1;
+}
+
+void MainWindow::on_spinBox_3_valueChanged(int arg1)
+{
+    a=arg1;
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+          //tutaj jednorazowo działa odświeżenie jeśli przekopiuję całą treść głównej funkcji ^ o tamtą ^
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_radioButton_clicked()
+{
+
+}
+
+void MainWindow::on_radioButton_2_clicked()
+{
+
+}
+
+void MainWindow::on_radioButton_3_clicked()
+{
+
 }
