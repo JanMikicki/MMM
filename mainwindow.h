@@ -36,6 +36,8 @@ private slots:
 
     void on_radioButton_3_clicked();
 
+    void on_horizontalSlider_sliderReleased();
+
 private:
     Ui::MainWindow *ui;
 };

@@ -3,6 +3,9 @@
 #include <math.h>
 
 double b=1,A=1,a=1;
+int ksztalt = 1;
+int krok_ms = 25;
+int czas = 12;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -27,19 +30,13 @@ MainWindow::MainWindow(QWidget *parent) :
     trapez2.append(0);
     y1.append(0);
 
+    double krok = krok_ms * 0.001;
+
     for (int i=0; i<551; ++i)
     {
-      x.append(0.025 * i);
+      x.append(krok * i);
 
 
-      //y1.append(2/3.14159*asin(qSin(i*(4*3.14159/251))));                   //TRIANGLE
-
-/*
-      if(qSin(i*(4*3.14159/251))>=0)
-          y1[i]=1;                            //SQUARE
-      else y1[i]=-1;
-
-*/
       y1.append(qSin(i*(4*3.14159/251)));      //SINUS
 
 
@@ -47,11 +44,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
       y0.append(trapez1[i]);
 
-      x1.append(x1[i] + 0.025 * x2[i]);
-      x2.append(x2[i] + 0.025 * (- b*x2[i] - A*tanh(a*x1[i]) + pow(y1[i], 3)));
+      x1.append(x1[i] + krok * x2[i]);
+      x2.append(x2[i] + krok * (- b*x2[i] - A*tanh(a*x1[i]) + pow(y1[i], 3)));
 
-      trapez1.append(trapez1[i] + 0.025*(x2[i]+x2[i+1])*0.5);
-      trapez2.append(trapez2[i] + 0.025*((- b*x2[i] - A*tanh(a*x1[i]) + pow(y1[i], 3)) + (- b*x2[i+1] - A*tanh(a*x1[i+1]) + pow(y1[i+1], 3)))*0.5);
+      trapez1.append(trapez1[i] + krok*(x2[i]+x2[i+1])*0.5);
+      trapez2.append(trapez2[i] + krok*((- b*x2[i] - A*tanh(a*x1[i]) + pow(y1[i], 3)) + (- b*x2[i+1] - A*tanh(a*x1[i+1]) + pow(y1[i+1], 3)))*0.5);
 
     }
 
@@ -105,31 +102,37 @@ void MainWindow::on_pushButton_clicked()
     trapez2.append(0);
     y1.append(0);
 
+    double krok = krok_ms * 0.001;
+
     for (int i=0; i<551; ++i)
     {
-      x.append(0.025 * i);
+      x.append(krok * i);
 
+      switch (ksztalt) {
+      case 1:
+          y1.append(qSin(i*(4*3.14159/251)));                          //SINUS
+          break;
+      case 2:
+          if(qSin(i*(4*3.14159/251))>=0)
+              y1.append(1);                                            //SQUARE
+          else y1.append(-1);
+          break;
+      default:
+          y1.append(2/3.14159*asin(qSin(i*(4*3.14159/251))));          //TRIANGLE
+          break;
+      }
 
-      //y1.append(2/3.14159*asin(qSin(i*(4*3.14159/251))));                   //TRIANGLE
-
-/*
-      if(qSin(i*(4*3.14159/251))>=0)
-          y1[i]=1;                            //SQUARE
-      else y1[i]=-1;
-
-*/
-      y1.append(qSin(i*(4*3.14159/251)));      //SINUS
 
 
       //i > 100 ? y1.append(2) : y1.append(0);  //STEP
 
       y0.append(trapez1[i]);
 
-      x1.append(x1[i] + 0.025 * x2[i]);
-      x2.append(x2[i] + 0.025 * (- b*x2[i] - A*tanh(a*x1[i]) + pow(y1[i], 3)));
+      x1.append(x1[i] + krok * x2[i]);
+      x2.append(x2[i] + krok * (- b*x2[i] - A*tanh(a*x1[i]) + pow(y1[i], 3)));
 
-      trapez1.append(trapez1[i] + 0.025*(x2[i]+x2[i+1])*0.5);
-      trapez2.append(trapez2[i] + 0.025*((- b*x2[i] - A*tanh(a*x1[i]) + pow(y1[i], 3)) + (- b*x2[i+1] - A*tanh(a*x1[i+1]) + pow(y1[i+1], 3)))*0.5);
+      trapez1.append(trapez1[i] + krok*(x2[i]+x2[i+1])*0.5);
+      trapez2.append(trapez2[i] + krok*((- b*x2[i] - A*tanh(a*x1[i]) + pow(y1[i], 3)) + (- b*x2[i+1] - A*tanh(a*x1[i+1]) + pow(y1[i+1], 3)))*0.5);
 
     }
 
@@ -155,15 +158,20 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_radioButton_clicked()
 {
-
+    ksztalt = 1;
 }
 
 void MainWindow::on_radioButton_2_clicked()
 {
-
+    ksztalt = 2;
 }
 
 void MainWindow::on_radioButton_3_clicked()
 {
+    ksztalt = 3;
+}
 
+void MainWindow::on_horizontalSlider_sliderReleased()
+{
+    krok_ms = ui->horizontalSlider->value();
 }
