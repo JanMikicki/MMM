@@ -27,7 +27,6 @@ MainWindow::MainWindow(QWidget *parent) :
     trapez2.append(0);
     y1.append(0);
 
-
     for (int i=0; i<551; ++i)
     {
       x.append(0.025 * i);
@@ -43,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
 */
       y1.append(qSin(i*(4*3.14159/251)));      //SINUS
 
+
       //i > 100 ? y1.append(2) : y1.append(0);  //STEP
 
       y0.append(trapez1[i]);
@@ -52,6 +52,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
       trapez1.append(trapez1[i] + 0.025*(x2[i]+x2[i+1])*0.5);
       trapez2.append(trapez2[i] + 0.025*((- b*x2[i] - A*tanh(a*x1[i]) + pow(y1[i], 3)) + (- b*x2[i+1] - A*tanh(a*x1[i+1]) + pow(y1[i+1], 3)))*0.5);
+
     }
 
     // configure right and top axis to show ticks but no labels:
