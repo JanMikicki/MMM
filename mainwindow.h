@@ -24,11 +24,11 @@ private slots:
 
     void on_spinBox_3_valueChanged(int arg1);
 
-    void on_pushButton_released();
+    //void on_pushButton_released();
 
-    void on_pushButton_clicked(bool checked);
+    //void on_pushButton_clicked(bool checked);
 
-    void on_pushButton_toggled(bool checked);
+    //void on_pushButton_toggled(bool checked);
 
     void on_radioButton_clicked();
 
