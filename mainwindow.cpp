@@ -31,13 +31,14 @@ MainWindow::MainWindow(QWidget *parent) :
     y1.append(0);
 
     double krok = krok_ms * 0.001;
+    double ilosc_prostokatow = czas/krok;
 
-    for (int i=0; i<551; ++i)
+    for (int i=0; i<ilosc_prostokatow; ++i)
     {
       x.append(krok * i);
 
 
-      y1.append(qSin(i*(4*3.14159/251)));      //SINUS
+      y1.append(qSin(i*(czas*3.14159/ilosc_prostokatow)));      //SINUS
 
 
       //i > 100 ? y1.append(2) : y1.append(0);  //STEP
@@ -103,22 +104,23 @@ void MainWindow::on_pushButton_clicked()
     y1.append(0);
 
     double krok = krok_ms * 0.001;
+    double ilosc_prostokatow = czas/krok;
 
-    for (int i=0; i<551; ++i)
+    for (int i=0; i<ilosc_prostokatow; ++i)
     {
       x.append(krok * i);
 
       switch (ksztalt) {
       case 1:
-          y1.append(qSin(i*(4*3.14159/251)));                          //SINUS
+          y1.append(qSin(i*(czas*3.14159/ilosc_prostokatow)));                          //SINUS
           break;
       case 2:
-          if(qSin(i*(4*3.14159/251))>=0)
+          if(qSin(i*(4*3.14159/ilosc_prostokatow))>=0)
               y1.append(1);                                            //SQUARE
           else y1.append(-1);
           break;
       default:
-          y1.append(2/3.14159*asin(qSin(i*(4*3.14159/251))));          //TRIANGLE
+          y1.append(2/3.14159*asin(qSin(i*(4*3.14159/ilosc_prostokatow))));          //TRIANGLE
           break;
       }
 
@@ -174,4 +176,9 @@ void MainWindow::on_radioButton_3_clicked()
 void MainWindow::on_horizontalSlider_sliderReleased()
 {
     krok_ms = ui->horizontalSlider->value();
+}
+
+void MainWindow::on_horizontalSlider_2_sliderReleased()
+{
+    czas = ui->horizontalSlider_2->value();
 }

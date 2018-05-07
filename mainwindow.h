@@ -38,6 +38,8 @@ private slots:
 
     void on_horizontalSlider_sliderReleased();
 
+    void on_horizontalSlider_2_sliderReleased();
+
 private:
     Ui::MainWindow *ui;
 };

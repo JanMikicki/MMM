@@ -222,7 +222,7 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
      <number>1</number>
     </property>
     <property name="maximum">
-     <number>100</number>
+     <number>400</number>
     </property>
     <property name="sliderPosition">
      <number>25</number>
@@ -253,31 +253,57 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QLabel" name="label_7">
-    <property name="geometry">
-     <rect>
-      <x>1000</x>
-      <y>360</y>
-      <width>141</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Przedział całkowania [ms]:</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_8">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
       <x>1000</x>
       <y>410</y>
-      <width>121</width>
-      <height>20</height>
+      <width>148</width>
+      <height>15</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Przedział czasu [s]:</string>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label_8">
+       <property name="text">
+        <string>Przedział czasu [s]:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_9">
+       <property name="text">
+        <string>12</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>1000</x>
+      <y>360</y>
+      <width>182</width>
+      <height>15</height>
+     </rect>
     </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_7">
+       <property name="text">
+        <string>Przedział całkowania [ms]:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_10">
+       <property name="text">
+        <string>25</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -310,5 +336,38 @@ font: 10pt &quot;MS Shell Dlg 2&quot;;</string>
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>horizontalSlider_2</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_9</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1098</x>
+     <y>466</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1127</x>
+     <y>448</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_10</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1117</x>
+     <y>421</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1158</x>
+     <y>401</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
